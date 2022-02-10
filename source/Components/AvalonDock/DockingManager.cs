@@ -2171,9 +2171,12 @@ namespace AvalonDock
 				if (e.OldItems != null)
 				{
 					var documentsToRemove = Layout.Descendents().OfType<LayoutDocument>().Where(d => e.OldItems.Contains(d.Content)).ToArray();
+					foreach (var group in documentsToRemove.GroupBy(d => d.Parent))
+					{
+						group.Key.RemoveChildren(group);
+					}
 					foreach (var documentToRemove in documentsToRemove)
 					{
-						documentToRemove.Parent.RemoveChild(documentToRemove);
 						RemoveViewFromLogicalChild(documentToRemove);
 					}
 				}
@@ -2233,10 +2236,12 @@ namespace AvalonDock
 			{
 				//Remove documents that are no longer in the DocumentSource.
 				var documentsToRemove = GetItemsToRemoveAfterReset<LayoutDocument>(DocumentsSource);
+				foreach (var group in documentsToRemove.GroupBy(d => d.Parent))
+				{
+					group.Key.RemoveChildren(group);
+				}
 				foreach (var documentToRemove in documentsToRemove)
 				{
-					(documentToRemove.Parent as ILayoutContainer).RemoveChild(
-						documentToRemove);
 					RemoveViewFromLogicalChild(documentToRemove);
 				}
 			}

@@ -1,4 +1,4 @@
-﻿/************************************************************************
+/************************************************************************
    AvalonDock
 
    Copyright (C) 2007-2013 Xceed Software Inc.
@@ -34,6 +34,12 @@ namespace AvalonDock.Layout
 
 		/// <summary>Removes a particular child element from this layout container.</summary>
 		void RemoveChild(ILayoutElement element);
+
+		void RemoveChildren(IEnumerable<ILayoutElement> elements)
+		{
+			foreach (var element in elements)
+				RemoveChild(element);
+		}
 
 		/// <summary>Replaces a particular child element with a new element in this layout container.</summary>
 		void ReplaceChild(ILayoutElement oldElement, ILayoutElement newElement);

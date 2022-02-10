@@ -26,7 +26,7 @@ namespace AvalonDock.Layout
 	{
 		#region fields
 
-		private readonly ObservableCollection<T> _children = new ObservableCollection<T>();
+		private readonly ObservableCollectionEx<T> _children = new ObservableCollectionEx<T>();
 		private bool _isVisible = true;
 
 		#endregion fields
@@ -105,6 +105,12 @@ namespace AvalonDock.Layout
 		{
 			if (element is T t)
 				_children.Remove(t);
+		}
+
+		/// <inheritdoc cref="ILayoutContainer" />
+		public void RemoveChildren(IEnumerable<ILayoutElement> elements)
+		{
+			_children.RemoveRange(elements.OfType<T>(), NotifyCollectionChangedAction.Reset);
 		}
 
 		/// <inheritdoc cref="ILayoutContainer" />
